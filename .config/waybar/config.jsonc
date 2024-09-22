@@ -1,0 +1,174 @@
+// -*- mode: jsonc -*-
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 25, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 2, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+	//"sway/workspaces"
+	"cpu",
+	"memory",
+	"temperature"
+    ],
+    "modules-center": [
+        //"sway/window"
+	"group/connection",
+	"gps"
+    ],
+    "modules-right": [
+	"idle_inhibitor",
+	"privacy",
+//	"group/connection",
+        "pulseaudio",
+        "battery",
+        "clock"
+    ],
+    "privacy": {
+        "icon-spacing": 4,
+        "icon-size": 18,
+        "transition-duration": 250,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-out",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            }
+        ]
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+        "interval": 60,
+        "max-length": 25,
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ]
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "ignored-sinks": ["Easy Effects Sink"]
+    },
+    "gps": {
+	"format": "{satellites_visible} satellites visible",
+	"format-fix-3d": "{latitude}° W, {longitude}° E",
+	"tooltip-format": "{satellites_visible} satellites visible",
+	"tooltip-format-fix-2d": "{satellites_used}/{satellites_visible} satellites used",
+	"tooltip-format-fix-3d": "Altitude: {altitude_hae}m",
+},
+    "group/connection": {
+        "orientation": "inherit",
+        "modules": [
+          "custom/vpn",
+          "group/wifi",
+          "group/net"
+//        "bluetooth"
+        ]
+    },
+    "group/net": {
+	"orientation": "inherit",
+	"modules": [
+	  "network"
+	]
+    },
+    "group/wifi": {
+	"orientation": "inherit",
+	"modules": [
+	  "network#wifi"
+	]
+    },
+    "bluetooth": {
+        "format": " {status}",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+    },
+    "network": {
+        "interval": "5",
+        "format": "Disconnected",
+        "format-linked": "{ifname} | {bandwidthTotalBits} ↑↓",
+	    "format-wifi": "{ipaddr}/{cidr} | {bandwidthTotalBits} ↑↓",
+	    "format-ethernet": "{ipaddr}/{cidr} | {bandwidthTotalBits} ↑↓",
+        "tooltip-format": "Disconnected",
+        "tooltip-format-linked": "{ifname} | {bandwidthDownBits} | {bandwidthUpBits}",
+        "tooltip-format-wifi": "{ifname} via {gwaddr} | {bandwidthDownBits} | {bandwidthUpBits}",
+        "tooltip-format-ethernet": "{ifname} via {gwaddr} | {bandwidthDownBits} | {bandwidthUpBits}",
+        "max-length": 50
+    },
+    "network#wifi": {
+        "interval": "5",
+        "interface": "wlan0",
+        "format": "",
+        "format-wifi": "{essid} ({frequency}GHz | {signalStrength}%) ",
+        "format-disconnected": "", //An empty format will hide the module.
+        "tooltip-format-wifi": "{essid} ({frequency}GHz | {signalStrength}% | {signaldBm}dBm)",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50
+    }
+}
